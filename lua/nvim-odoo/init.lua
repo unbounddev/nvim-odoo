@@ -1,5 +1,6 @@
 local printUtils = require("table-utils")
 local cmp = require("cmp")
+local parse = require("parse")
 local source = {}
 
 
@@ -8,12 +9,16 @@ function source:complete(params, callback)
   -- io.output(file)
   -- printUtils.printTable(params)
   -- io.close(file)
+  -- local buffer_content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+  print(buffer_content[row])
   local items = {}
   local ft = params.context.filetype
   local curr_file = vim.api.nvim_buf_get_name(0)
   if not string.find(curr_file, "__manifest__.py") then
     return
   end
+  local buffer_content = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  parse.parse_manifest(buffer_content, vim.api.nvim_win_get_cursor(0))
   local cursor_before_line = params.context.cursor_before_line
   local trigger_character = params.completion_context.triggerCharacter
   if (trigger_character == "\"" or trigger_character == "'") and string.find(cursor_before_line, "^%s*[\"\']$") then
