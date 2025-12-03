@@ -10,7 +10,6 @@ function source:complete(params, callback)
   -- printUtils.printTable(params)
   -- io.close(file)
   -- local buffer_content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-  print(buffer_content[row])
   local items = {}
   local ft = params.context.filetype
   local curr_file = vim.api.nvim_buf_get_name(0)
